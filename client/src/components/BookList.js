@@ -1,28 +1,26 @@
-import React from "react";
-import { gql } from "apollo-boost";
+import React, { useState } from "react";
 import { graphql } from "react-apollo";
-
-const getBookQuery = gql`
-  {
-    books {
-      name
-      id
-    }
-  }
-`;
+import { getBooksQuery } from "../queries/queries";
+import BookDetails from "./BookDetails";
 
 function BookList(props) {
+  const [selected, setSelected] = useState(null);
   const data = props.data;
 
   if (!data.loading) {
     return (
       <div>
-        <ul className="book-list">
+        <ul id="book-list">
           {data.books &&
             data.books.map((book) => {
-              return <li>{book.name}</li>;
+              return (
+                <li onClick={() => setSelected(book.id)} key={book.id}>
+                  {book.name}
+                </li>
+              );
             })}
         </ul>
+        <BookDetails selected={selected}></BookDetails>
       </div>
     );
   } else {
@@ -30,4 +28,4 @@ function BookList(props) {
   }
 }
 
-export default graphql(getBookQuery)(BookList);
+export default graphql(getBooksQuery)(BookList);

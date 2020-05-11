@@ -11,7 +11,7 @@ app.use(cors());
 
 mongoose.connect(
   "mongodb+srv://kkureli:JSHuH49zZZ0dbYeU@cluster0-jtrbl.mongodb.net/test?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useCreateIndex: true }
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 
 mongoose.connection.once("open", () => {

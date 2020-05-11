@@ -86,9 +86,15 @@ const RootQuery = new GraphQLObjectType({
     },
     books: {
       type: new GraphQLList(BookType),
-      resolve(parent, args) {
+      async resolve(parent, args) {
         // return books;
-        return Book.find({}); //returns all match
+        try {
+          const AllBooks = await Book.find({}); //returns all match
+          return AllBooks;
+        } catch (err) {
+          const error = new GraphQLError(err); //you need to import GraphQLError like a GraphQLString type
+          return error;
+        }
       },
     },
     authors: {
