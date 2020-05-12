@@ -47,6 +47,7 @@ function AddBook(props) {
   return (
     <div>
       <form onSubmit={(e) => onSubmit(e)} id="add-book">
+        Add new Book
         <div className="field">
           <label>Book name:</label>
           <input

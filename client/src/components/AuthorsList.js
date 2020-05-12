@@ -1,46 +1,45 @@
 import React, { useContext } from "react";
 import { graphql } from "react-apollo";
-import { getBooksQuery } from "../queries/queries";
-import Details from "./Details";
+import { getAuthorsQuery } from "../queries/queries";
 import { DetailsContext } from "../contexts/DetailsContext";
 
-function BookList(props) {
+function AuthorsList(props) {
   const { dispatchSelectedDetails, selectedDetails } = useContext(
     DetailsContext
   );
-  console.log("selected", selectedDetails);
 
-  const data = props.data;
+  const { getAuthorsQuery } = props;
 
-  if (!data.loading) {
+  if (!getAuthorsQuery.loading) {
     return (
       <div className="bookListDiv">
-        <h1 style={{ textAlign: "center" }}>Books</h1>
+        <h1 style={{ textAlign: "center" }}>Authors</h1>
         <ul id="book-list">
-          {data.books &&
-            data.books.map((book) => {
+          {getAuthorsQuery.authors &&
+            getAuthorsQuery.authors.map((author) => {
               return (
                 <li
                   onClick={() =>
                     dispatchSelectedDetails({
                       type: "CHANGE_SELECTED",
-                      selected: book.id,
-                      selectedType: "book",
+                      selected: author.id,
+                      selectedType: "author",
                     })
                   }
-                  key={book.id}
                 >
-                  {book.name}
+                  {author.name}
                 </li>
               );
             })}
         </ul>
-        <Details selectedID={selectedDetails.selected}></Details>
+        {/* <BookDetails selected={selected}></BookDetails> */}
       </div>
     );
   } else {
-    return <h1>Books Loading...</h1>;
+    return <h1>Authors Loading...</h1>;
   }
 }
 
-export default graphql(getBooksQuery)(BookList);
+export default graphql(getAuthorsQuery, { name: "getAuthorsQuery" })(
+  AuthorsList
+);

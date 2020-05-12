@@ -19,6 +19,13 @@ body {
   padding: 0;
 }
 
+.bookListDiv {
+  border: #880e4f solid 1px;
+  overflow: auto;
+  height: 400px;
+  width: 170px;
+}
+
 #book-list li {
   display: inline-block;
   margin: 12px;
